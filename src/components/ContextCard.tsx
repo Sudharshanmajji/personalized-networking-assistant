@@ -2,7 +2,7 @@ import type { FactCheckResponse } from "@/lib/types";
 
 interface ContextCardProps {
   context: FactCheckResponse | null;
-  loading?: boolean;
+  loading?: boolean | undefined;
 }
 
 export function ContextCard({ context, loading }: ContextCardProps) {
