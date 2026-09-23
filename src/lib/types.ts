@@ -76,7 +76,7 @@ export interface HistoryEntry {
 export interface FeedbackRequest {
   entry_id: string | null;
   rating: "useful" | "not_useful";
-  comment?: string;
+  comment?: string | undefined;
 }
 
 export interface FeedbackEntry extends FeedbackRequest {
