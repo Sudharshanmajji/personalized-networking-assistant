@@ -113,7 +113,7 @@ export function mockGenerateConversation(
   const interest = req.interest.trim() || "your field";
   const theme = req.themes[0]?.label ?? "this event";
   const seed = hash(`${req.event_description}${interest}`) + attempt;
-  const template = STARTER_TEMPLATES[seed % STARTER_TEMPLATES.length];
+  const template = STARTER_TEMPLATES[seed % STARTER_TEMPLATES.length] ?? STARTER_TEMPLATES[0]!;
 
   return {
     conversation_starter: template(interest, theme),
