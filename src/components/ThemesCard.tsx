@@ -4,8 +4,8 @@ const BAR_COLORS = ["bg-coral", "bg-grape", "bg-mint", "bg-sun", "bg-ink"];
 
 interface ThemesCardProps {
   themes: EventTheme[];
-  model?: string;
-  loading?: boolean;
+  model?: string | undefined;
+  loading?: boolean | undefined;
 }
 
 export function ThemesCard({ themes, model, loading }: ThemesCardProps) {
