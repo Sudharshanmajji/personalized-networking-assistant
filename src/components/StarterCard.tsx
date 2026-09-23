@@ -1,7 +1,7 @@
 interface StarterCardProps {
   starter: string | null;
-  model?: string;
-  loading?: boolean;
+  model?: string | undefined;
+  loading?: boolean | undefined;
   onRegenerate: () => void;
 }
 
