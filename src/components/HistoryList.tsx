@@ -12,8 +12,8 @@ function formatTimestamp(iso: string) {
 
 interface HistoryListProps {
   entries: HistoryEntry[];
-  loading?: boolean;
-  detailed?: boolean;
+  loading?: boolean | undefined;
+  detailed?: boolean | undefined;
 }
 
 export function HistoryList({ entries, loading, detailed }: HistoryListProps) {
