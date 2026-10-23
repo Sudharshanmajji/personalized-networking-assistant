@@ -1,225 +1,142 @@
-# Networking Navigator
+# Personalized Networking Assistant
 
-Build a complete, professional web application called:
+An AI-powered web application that helps users prepare for professional networking events by generating personalized conversation starters from event descriptions and user interests.
 
-"Personalized Networking Assistant"
+## Features
 
-PROJECT PURPOSE:
+- **Event Theme Analysis:** Identify relevant themes using DistilBERT zero-shot classification.
+- **Context Verification:** Retrieve supporting information using the Wikipedia API.
+- **Conversation Generation:** Generate networking questions using GPT-2, with fallback responses.
+- **History Management:** Save and retrieve previous generations using JSON storage.
+- **User Feedback:** Submit and retrieve feedback on generated conversations.
+- **Web Interface:** React and TanStack Start frontend connected to a FastAPI backend.
 
-This is an AI-powered professional networking assistant developed as a GenAI internship project.
+## Technology Stack
 
-The application helps users attending professional networking events generate personalized, meaningful conversation starters based on:
+**Frontend:** React, TypeScript, TanStack Start, Tailwind CSS
 
-The event description
+**Backend:** Python, FastAPI
 
-The user's professional/personal interest
+**AI/NLP:** Hugging Face Transformers, DistilBERT, GPT-2
 
-Detected event themes
+**External Knowledge:** Wikipedia API
 
-External factual context
+**Storage:** JSON files
 
-IMPORTANT:
-Do not turn this into a generic chatbot.
-The main purpose is generating professional networking conversation starters.
+## Application Workflow
 
-APPLICATION FLOW:
+1. Enter an event description and an area of interest.
+2. Analyze the event to identify relevant themes.
+3. Retrieve contextual information from Wikipedia.
+4. Generate a personalized conversation starter.
+5. Review previous generations and submit feedback.
 
-User enters:
+## Project Structure
 
-Event Description
-Example:
-"Cyber Security Summit"
+```text
+.
+├── backend/
+│   ├── app.py
+│   ├── routes.py
+│   ├── services/
+│   ├── utils/
+│   └── database/
+├── public/
+├── src/
+├── .env.example
+├── package.json
+└── README.md
+```
 
-User Interest
-Example:
-"Ethical Hacking"
+## Prerequisites
 
-The application should then display:
+- Node.js and npm
+- Python 3.10 or a version supported by the backend dependencies
+- Internet access for external APIs and model downloads
 
-Detected Event Themes
+## Setup
 
-Confidence scores for detected themes
+### 1. Clone the repository
 
-Verified/External Context
+```bash
+git clone <YOUR_NEW_REPOSITORY_URL>
+cd <YOUR_REPOSITORY_DIRECTORY>
+```
 
-Personalized Conversation Starter
+### 2. Configure the frontend
 
-Conversation History
+Create a local `.env` file using `.env.example` as a reference:
 
-User Feedback
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
 
-MAIN DASHBOARD:
+### 3. Install frontend dependencies
 
-Create a modern, clean, professional AI-style dashboard.
+```bash
+npm ci
+```
 
-Header:
+### 4. Install backend dependencies
 
-Personalized Networking Assistant
+Install the Python packages listed in the project's backend dependency file. If no dependency file exists yet, create one containing the packages actually required by the backend.
 
-Subtitle:
+### 5. Start the backend
 
-"AI-powered conversation starters for meaningful professional networking."
+From the project root:
 
-INPUT SECTION:
+```bash
+python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+```
 
-Create two large input fields.
+Backend API documentation is available at `http://127.0.0.1:8000/docs`.
 
-Event Description:
-A multiline text field.
+### 6. Start the frontend
 
-Your Interest:
-A text field.
+Open a second terminal in the project root:
 
-Add a prominent button:
-
-"Generate Conversation Starter"
-
-RESULT SECTION:
-
-After generation, display three major cards.
-
-CARD 1:
-"Detected Event Themes"
-
-Show multiple themes with confidence percentages.
-
-Example:
-
-Cyber Security 99.7%
-Networking 82.5%
-Technology 82.3%
-Innovation 48.6%
-
-Use progress bars or confidence indicators.
-
-CARD 2:
-"Verified Context"
-
-Display:
-
-Topic
-Verification status
-Short factual summary
-Source: Wikipedia
-
-CARD 3:
-"Personalized Conversation Starter"
-
-Display one short, natural and friendly professional networking question.
-
-Example:
-
-"I noticed you're interested in ethical hacking. What cybersecurity
-challenges do you think organizations should be paying more attention
-to right now?"
-
-Add:
-
-"Regenerate"
-
-button.
-
-HISTORY:
-
-Create a History page/section.
-
-Each history entry should show:
-
-Timestamp
-Event
-User Interest
-Detected Themes
-Generated Conversation Starter
-
-FEEDBACK:
-
-Create a feedback section.
-
-Allow the user to submit:
-
-Useful / Not Useful
-
-and optional written feedback.
-
-ABOUT:
-
-Create an "How It Works" section explaining:
-
-User Input
-→ Event Theme Analysis
-→ External Context
-→ AI Conversation Generation
-→ Personalized Result
-
-TECHNOLOGY INFORMATION:
-
-The original project uses:
-
-Frontend:
-Streamlit
-
-Backend:
-FastAPI
-
-NLP:
-Hugging Face Transformers
-DistilBERT zero-shot classification
-
-Generative AI:
-GPT-2
-
-External Knowledge:
-Wikipedia API
-
-Storage:
-JSON files
-
-The frontend generated by this project should be designed so that it can later communicate with a Python FastAPI backend using REST APIs.
-
-EXPECTED BACKEND API CONTRACT:
-
-Prepare the frontend architecture to support these API endpoints:
-
-GET /
-GET /health
-POST /analyze-event
-POST /fact-check
-POST /generate-conversation
-GET /history
-POST /feedback
-GET /feedback
-
-Do not hardcode the final AI responses.
-
-For the initial UI, use realistic demo/mock responses so that the entire interface can be demonstrated before connecting the Python backend.
-
-Make the application responsive and suitable for a university project review demonstration.
-
-Keep components modular and the code organized so that the frontend can later be connected to the Python FastAPI backend.
-
-Do not remove the concept of:
-
-Event → Theme Analysis → Wikipedia Context → GPT-2 Generation → Result.
-
-The UI should make this pipeline visually understandable to a project reviewer.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a996af79-ff5a-4170-9035-a959205952a4).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+```bash
 npm run dev
 ```
+
+Use the local URL printed by the development server.
+
+## API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/` | Root endpoint |
+| GET | `/health` | Health check |
+| POST | `/analyze-event` | Analyze event themes |
+| POST | `/fact-check` | Retrieve factual context |
+| POST | `/generate-conversation` | Generate a conversation starter |
+| GET | `/history` | Retrieve conversation history |
+| POST | `/history` | Save a history entry |
+| POST | `/feedback` | Submit feedback |
+| GET | `/feedback` | Retrieve feedback |
+
+## Validation
+
+Run the following checks from the project root:
+
+```bash
+npm run lint
+npm run build
+python -m compileall -q backend
+```
+
+The lint command may report non-blocking React Fast Refresh warnings.
+
+## Limitations
+
+- Generated conversation quality depends on the capabilities of the selected language model.
+- GPT-2 may produce generic or imperfect suggestions.
+- Wikipedia context retrieval depends on external service availability.
+- JSON files provide simple local persistence and are not a substitute for a production database.
+
+## Future Improvements
+
+- Improve response relevance and factual grounding.
+- Add automated backend tests.
+- Introduce persistent database storage.
+- Improve error handling and deployment configuration.

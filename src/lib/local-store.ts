@@ -47,8 +47,7 @@ export const SEED_HISTORY: HistoryEntry[] = [
         "Product design is the process of identifying a user need and shaping a product's form, function and experience to meet it.",
       source: "Wikipedia",
     },
-    conversation_starter:
-      "How do you balance frictionless UX with compliance in payments?",
+    conversation_starter: "How do you balance frictionless UX with compliance in payments?",
   },
   {
     id: "seed-3",
@@ -67,8 +66,7 @@ export const SEED_HISTORY: HistoryEntry[] = [
         "Clinical AI applies machine learning to diagnosis, triage and treatment planning, usually under strict regulatory validation.",
       source: "Wikipedia",
     },
-    conversation_starter:
-      "Where do you see diagnostic AI changing patient outcomes first?",
+    conversation_starter: "Where do you see diagnostic AI changing patient outcomes first?",
   },
 ];
 

@@ -5,11 +5,7 @@
  * Python service. When it is absent the client returns realistic demo data
  * so the interface can be reviewed end to end.
  */
-import {
-  mockAnalyzeEvent,
-  mockFactCheck,
-  mockGenerateConversation,
-} from "./mock-backend";
+import { mockAnalyzeEvent, mockFactCheck, mockGenerateConversation } from "./mock-backend";
 import type {
   AnalyzeEventRequest,
   AnalyzeEventResponse,
@@ -22,11 +18,7 @@ import type {
   HealthStatus,
   HistoryEntry,
 } from "./types";
-import {
-  readFeedback,
-  readHistory,
-  writeFeedbackEntry,
-} from "./local-store";
+import { readFeedback, readHistory, writeFeedbackEntry, writeHistoryEntry } from "./local-store";
 
 const BASE_URL = (import.meta.env["VITE_API_BASE_URL"] as string | undefined)?.replace(/\/$/, "");
 
@@ -105,7 +97,17 @@ export const api = {
     }
     return request<HistoryEntry[]>("/history");
   },
+  async saveHistory(entry: HistoryEntry): Promise<HistoryEntry> {
+    if (!BASE_URL) {
+      writeHistoryEntry(entry);
+      return entry;
+    }
 
+    return request<HistoryEntry>("/history", {
+      method: "POST",
+      body: JSON.stringify(entry),
+    });
+  },
   async postFeedback(body: FeedbackRequest): Promise<FeedbackEntry> {
     if (!BASE_URL) {
       await delay(300);

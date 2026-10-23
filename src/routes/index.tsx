@@ -11,7 +11,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { StarterCard } from "@/components/StarterCard";
 import { ThemesCard } from "@/components/ThemesCard";
 import { api } from "@/lib/api";
-import { readHistory, writeHistoryEntry } from "@/lib/local-store";
+import { readHistory } from "@/lib/local-store";
 import type { EventTheme, FactCheckResponse, HistoryEntry } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
@@ -23,7 +23,10 @@ export const Route = createFileRoute("/")({
         content:
           "Generate personalized professional networking conversation starters from an event description and your interest.",
       },
-      { property: "og:title", content: "Personalized Networking Assistant" },
+      {
+        property: "og:title",
+        content: "Personalized Networking Assistant",
+      },
       {
         property: "og:description",
         content:
@@ -57,14 +60,17 @@ function Dashboard() {
       setError("Add both an event description and your interest.");
       return;
     }
+
     setError(null);
     setLoading(true);
     setHasResult(true);
+
     try {
       const analysis = await api.analyzeEvent({
         event_description: eventDescription,
         interest,
       });
+
       setThemes(analysis.themes);
       setClassifierModel(analysis.model);
 
@@ -80,6 +86,7 @@ function Dashboard() {
         },
         nextAttempt,
       );
+
       setStarter(generated.conversation_starter);
       setGeneratorModel(generated.model);
 
@@ -92,10 +99,19 @@ function Dashboard() {
         context: verified,
         conversation_starter: generated.conversation_starter,
       };
-      setEntryId(entry.id);
-      setHistory(writeHistoryEntry(entry));
-    } catch {
-      setError("Could not reach the analysis service. Check the backend and try again.");
+
+      // Persist through FastAPI in live mode, or local storage in mock mode.
+      const savedEntry = await api.saveHistory(entry);
+
+      setEntryId(savedEntry.id);
+      setHistory((previous) =>
+        [savedEntry, ...previous.filter((item) => item.id !== savedEntry.id)].slice(0, 50),
+      );
+    } catch (err) {
+      console.error("Failed to run the networking assistant pipeline:", err);
+      setError(
+        "Could not complete the pipeline or save its history. Check the backend and try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -107,6 +123,8 @@ function Dashboard() {
   }
 
   function handleRegenerate() {
+    if (loading) return;
+
     const next = attempt + 1;
     setAttempt(next);
     void run(next);
@@ -122,9 +140,11 @@ function Dashboard() {
         <section className="relative">
           <div className="animate-floaty absolute -top-2 right-6 size-24 rounded-full bg-sun/40" />
           <div className="absolute left-1/2 top-16 size-10 rounded-full bg-grape/20" />
+
           <h1 className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[0.95] tracking-tight">
             Start the <span className="text-coral">right</span> conversation.
           </h1>
+
           <p className="mt-4 max-w-xl text-lg text-ink-soft">
             AI-powered conversation starters for meaningful professional networking. Drop in an
             event and your interest — we handle the rest.
@@ -144,8 +164,11 @@ function Dashboard() {
             onInterestChange={setInterest}
             onSubmit={handleGenerate}
           />
+
           {error ? (
-            <p className="mt-3 text-sm font-semibold text-coral-deep">{error}</p>
+            <p role="alert" className="mt-3 text-sm font-semibold text-coral-deep">
+              {error}
+            </p>
           ) : null}
         </div>
 
@@ -153,6 +176,7 @@ function Dashboard() {
           <section className="mt-10">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="font-display text-2xl font-bold">Results</h2>
+
               <span className="text-xs font-semibold text-ink-soft">
                 {loading ? "Running pipeline…" : "Pipeline complete"}
               </span>
@@ -164,7 +188,9 @@ function Dashboard() {
                 model={classifierModel}
                 loading={loading && themes.length === 0}
               />
+
               <ContextCard context={context} loading={loading && !context} />
+
               <StarterCard
                 starter={starter}
                 model={generatorModel}
@@ -179,10 +205,12 @@ function Dashboard() {
           <div className="card-block p-6 lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-display text-xl font-bold">Conversation History</h3>
+
               <Link to="/history" className="text-xs font-semibold text-grape hover:underline">
                 View all
               </Link>
             </div>
+
             <HistoryList entries={recent} />
           </div>
 
@@ -194,8 +222,8 @@ function Dashboard() {
         </div>
 
         <footer className="mt-10 pb-6 text-center text-xs text-ink-soft">
-          Frontend ready to connect to FastAPI REST endpoints (POST /analyze-event, /fact-check,
-          /generate-conversation, /feedback · GET /history, /feedback)
+          FastAPI REST backend: POST /analyze-event, /fact-check, /generate-conversation, /history,
+          /feedback · GET /history, /feedback
         </footer>
       </main>
     </div>

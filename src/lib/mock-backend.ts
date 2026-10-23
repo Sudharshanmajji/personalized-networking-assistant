@@ -107,7 +107,16 @@ const THEME_KEYWORDS: Record<string, string[]> = {
   Marketing: ["marketing", "growth", "campaign", "seo", "content strategy"],
   Robotics: ["robot", "drone", "automation", "iot", "embedded", "hardware"],
   Blockchain: ["blockchain", "web3", "crypto", "token", "smart contract"],
-  Networking: ["summit", "conference", "meetup", "forum", "mixer", "networking", "expo", "hackathon"],
+  Networking: [
+    "summit",
+    "conference",
+    "meetup",
+    "forum",
+    "mixer",
+    "networking",
+    "expo",
+    "hackathon",
+  ],
   Innovation: ["innovation", "future", "emerging", "research", "roadmap", "trend"],
 };
 
@@ -270,54 +279,76 @@ interface Ctx {
 /** Theme-specific question pools, keyed by detected theme label. */
 const THEME_POOLS: Record<string, Builder[]> = {
   "Cyber Security": [
-    (c) => `What challenges in ${c.interest.toLowerCase()} do you think organizations are currently finding hardest to address?`,
-    (c) => `With ${c.phrase} coming up so often here, which vulnerabilities do you think teams still underestimate?`,
-    (c) => `How has your approach to ${c.interest.toLowerCase()} changed as attackers have got faster?`,
-    (c) => `Where do you think security teams should invest first — detection, ${c.altPhrase}, or people?`,
+    (c) =>
+      `What challenges in ${c.interest.toLowerCase()} do you think organizations are currently finding hardest to address?`,
+    (c) =>
+      `With ${c.phrase} coming up so often here, which vulnerabilities do you think teams still underestimate?`,
+    (c) =>
+      `How has your approach to ${c.interest.toLowerCase()} changed as attackers have got faster?`,
+    (c) =>
+      `Where do you think security teams should invest first — detection, ${c.altPhrase}, or people?`,
   ],
   "Generative AI": [
-    (c) => `With LLMs and RAG becoming increasingly common, which applications of ${c.interest.toLowerCase()} are you most interested in exploring?`,
-    (c) => `How are you handling grounding and evaluation when you put ${c.phrase} in front of real users?`,
-    (c) => `Which part of the ${c.interest.toLowerCase()} stack do you think will look completely different a year from now?`,
+    (c) =>
+      `With LLMs and RAG becoming increasingly common, which applications of ${c.interest.toLowerCase()} are you most interested in exploring?`,
+    (c) =>
+      `How are you handling grounding and evaluation when you put ${c.phrase} in front of real users?`,
+    (c) =>
+      `Which part of the ${c.interest.toLowerCase()} stack do you think will look completely different a year from now?`,
     (c) => `Have you found ${c.phrase} works better as a product feature or as an internal tool?`,
   ],
   "Artificial Intelligence": [
-    (c) => `Where are you seeing ${c.interest.toLowerCase()} move from experiments into something teams actually depend on?`,
-    (c) => `What's been the hardest part of getting ${c.phrase} models reliable enough for production?`,
-    (c) => `How do you decide when a problem genuinely needs ${c.interest.toLowerCase()} rather than simpler logic?`,
+    (c) =>
+      `Where are you seeing ${c.interest.toLowerCase()} move from experiments into something teams actually depend on?`,
+    (c) =>
+      `What's been the hardest part of getting ${c.phrase} models reliable enough for production?`,
+    (c) =>
+      `How do you decide when a problem genuinely needs ${c.interest.toLowerCase()} rather than simpler logic?`,
   ],
   "Cloud Computing": [
-    (c) => `How are you seeing ${c.phrase} practices change as organizations adopt more AI-driven applications?`,
-    (c) => `What's your take on balancing cost and resilience in ${c.interest.toLowerCase()} today?`,
-    (c) => `Has ${c.phrase} made your releases genuinely calmer, or just moved the complexity somewhere else?`,
+    (c) =>
+      `How are you seeing ${c.phrase} practices change as organizations adopt more AI-driven applications?`,
+    (c) =>
+      `What's your take on balancing cost and resilience in ${c.interest.toLowerCase()} today?`,
+    (c) =>
+      `Has ${c.phrase} made your releases genuinely calmer, or just moved the complexity somewhere else?`,
   ],
   "Microservices & Backend": [
-    (c) => `How are you approaching the challenges of integrating ${c.phrase} with cloud-native deployments?`,
-    (c) => `Where do you draw service boundaries when you're working on ${c.interest.toLowerCase()}?`,
+    (c) =>
+      `How are you approaching the challenges of integrating ${c.phrase} with cloud-native deployments?`,
+    (c) =>
+      `Where do you draw service boundaries when you're working on ${c.interest.toLowerCase()}?`,
     (c) => `What's helped most with observability once ${c.phrase} started spanning several teams?`,
   ],
   "Data Engineering": [
-    (c) => `What's the trickiest part of keeping ${c.phrase} trustworthy as the number of consumers grows?`,
-    (c) => `How do you think ${c.interest.toLowerCase()} changes once AI workloads start pulling from the same pipelines?`,
+    (c) =>
+      `What's the trickiest part of keeping ${c.phrase} trustworthy as the number of consumers grows?`,
+    (c) =>
+      `How do you think ${c.interest.toLowerCase()} changes once AI workloads start pulling from the same pipelines?`,
   ],
   Healthcare: [
     (c) => `Where do you see ${c.interest.toLowerCase()} changing patient outcomes first?`,
-    (c) => `How are clinical teams reacting when ${c.phrase} shows up in their day-to-day workflow?`,
+    (c) =>
+      `How are clinical teams reacting when ${c.phrase} shows up in their day-to-day workflow?`,
   ],
   Fintech: [
-    (c) => `How do you balance frictionless experience with compliance when you're working on ${c.interest.toLowerCase()}?`,
+    (c) =>
+      `How do you balance frictionless experience with compliance when you're working on ${c.interest.toLowerCase()}?`,
     (c) => `Which part of ${c.phrase} do you think regulation will reshape the most?`,
   ],
   Sustainability: [
-    (c) => `What's actually moving the needle in ${c.interest.toLowerCase()} beyond reporting requirements?`,
+    (c) =>
+      `What's actually moving the needle in ${c.interest.toLowerCase()} beyond reporting requirements?`,
     (c) => `How do you get ${c.phrase} taken seriously when budgets tighten?`,
   ],
   Startup: [
-    (c) => `What made you go after ${c.interest.toLowerCase()} rather than an easier first problem?`,
+    (c) =>
+      `What made you go after ${c.interest.toLowerCase()} rather than an easier first problem?`,
     (c) => `At this stage, how are you deciding what to build in-house around ${c.phrase}?`,
   ],
   Design: [
-    (c) => `How do you keep ${c.interest.toLowerCase()} decisions consistent once several teams are shipping?`,
+    (c) =>
+      `How do you keep ${c.interest.toLowerCase()} decisions consistent once several teams are shipping?`,
     (c) => `What's the most useful signal you've found for judging whether ${c.phrase} is working?`,
   ],
   Robotics: [
@@ -325,22 +356,29 @@ const THEME_POOLS: Record<string, Builder[]> = {
     (c) => `How much of your ${c.phrase} work ends up being integration versus new capability?`,
   ],
   Blockchain: [
-    (c) => `Which ${c.interest.toLowerCase()} use cases do you think have actually earned their complexity?`,
+    (c) =>
+      `Which ${c.interest.toLowerCase()} use cases do you think have actually earned their complexity?`,
   ],
   Education: [
-    (c) => `How are you seeing ${c.interest.toLowerCase()} change what students expect to graduate knowing?`,
+    (c) =>
+      `How are you seeing ${c.interest.toLowerCase()} change what students expect to graduate knowing?`,
   ],
   Marketing: [
-    (c) => `What channel has surprised you most in your ${c.interest.toLowerCase()} work this year?`,
+    (c) =>
+      `What channel has surprised you most in your ${c.interest.toLowerCase()} work this year?`,
   ],
 };
 
 /** Generic-but-still-specific fallbacks that always name the input. */
 const FALLBACK_POOL: Builder[] = [
-  (c) => `${c.contextHint}What problem in ${c.interest.toLowerCase()} are you hoping someone here can help you think through?`,
-  (c) => `Given how much ${c.theme.toLowerCase()} came up in "${c.event}", what's your current view on ${c.interest.toLowerCase()}?`,
-  (c) => `What drew you to ${c.interest.toLowerCase()} in the first place, and what's keeping you there?`,
-  (c) => `Which idea from the ${c.theme.toLowerCase()} sessions do you think will actually stick in ${c.interest.toLowerCase()} work?`,
+  (c) =>
+    `${c.contextHint}What problem in ${c.interest.toLowerCase()} are you hoping someone here can help you think through?`,
+  (c) =>
+    `Given how much ${c.theme.toLowerCase()} came up in "${c.event}", what's your current view on ${c.interest.toLowerCase()}?`,
+  (c) =>
+    `What drew you to ${c.interest.toLowerCase()} in the first place, and what's keeping you there?`,
+  (c) =>
+    `Which idea from the ${c.theme.toLowerCase()} sessions do you think will actually stick in ${c.interest.toLowerCase()} work?`,
 ];
 
 function findPhrases(text: string): string[] {
@@ -374,7 +412,8 @@ export function mockGenerateConversation(
     const pool = THEME_POOLS[t.label] ?? matchPoolByName(t.label);
     if (pool) for (const build of pool) candidates.push({ theme: t.label, build });
   }
-  for (const build of FALLBACK_POOL) candidates.push({ theme: sorted[0]?.label ?? "this event", build });
+  for (const build of FALLBACK_POOL)
+    candidates.push({ theme: sorted[0]?.label ?? "this event", build });
 
   const seed = hash(`${event}|${interest}|${sorted.map((t) => t.label).join(",")}`);
   const index = (seed + attempt * 7 + 1) % candidates.length;
